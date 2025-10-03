@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Votre Chauffeur VTC</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- HEADER -->
+  <header class="relative h-screen bg-black text-white flex items-center justify-center" 
+          style="background: url('file-SXUwwHi43H6JKa7Gxhf5G5') center/cover no-repeat;">
+    <div class="bg-black/60 p-8 rounded-xl text-center">
+      <h1 class="text-4xl md:text-6xl font-bold">Votre Chauffeur VTC</h1>
+      <p class="mt-4 text-lg md:text-2xl">Confort • Ponctualité • Disponibilité 24/7</p>
+      <a href="#booking" class="mt-6 inline-block bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition">
+        Réserver Maintenant
+      </a>
+    </div>
+  </header>
+
+  <!-- NAVIGATION -->
+  <nav class="bg-gray-900 text-white flex justify-center gap-8 py-4 sticky top-0 z-50">
+    <a href="#about" class="hover:text-yellow-400">À propos</a>
+    <a href="#services" class="hover:text-yellow-400">Services</a>
+    <a href="#booking" class="hover:text-yellow-400">Réservation</a>
+    <a href="#contact" class="hover:text-yellow-400">Contact</a>
+  </nav>
+
+  <!-- ABOUT -->
+  <section id="about" class="py-16 text-center">
+    <h2 class="text-3xl font-bold mb-6">À propos</h2>
+    <p class="max-w-2xl mx-auto text-lg">Chauffeur VTC professionnel, je vous accompagne pour vos trajets privés et professionnels.
+      Mon objectif : vous offrir un service haut de gamme basé sur la sécurité, le confort et la ponctualité.</p>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="py-16 bg-gray-100">
+    <h2 class="text-3xl font-bold text-center mb-10">Nos Services</h2>
+    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <img src="file-6dNU9WLdM12GeYD6oq42fw" alt="Service 1" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">Transferts Aéroport</h3>
+          <p>Prise en charge rapide et ponctuelle pour vos voyages.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <img src="file-GJJZeod2SnvvTYtNDK3A1k" alt="Service 2" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">Déplacements Professionnels</h3>
+          <p>Un service discret et fiable pour vos rendez-vous d’affaires.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <img src="file-SXUwwHi43H6JKa7Gxhf5G5" alt="Service 3" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">Soirées & Événements</h3>
+          <p>Profitez pleinement de vos soirées sans vous soucier du retour.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section id="booking" class="py-16">
+    <h2 class="text-3xl font-bold text-center mb-8">Réservation</h2>
+    <form onsubmit="sendWhatsApp(event)" class="bg-white shadow-lg rounded-xl p-8 max-w-lg mx-auto grid gap-4">
+      <input id="name" type="text" placeholder="Nom et prénom" required class="border rounded-lg p-3">
+      <input id="phone" type="tel" placeholder="Téléphone" required class="border rounded-lg p-3">
+      <input id="from" type="text" placeholder="Lieu de départ" required class="border rounded-lg p-3">
+      <input id="to" type="text" placeholder="Lieu d’arrivée" required class="border rounded-lg p-3">
+      <input id="date" type="datetime-local" required class="border rounded-lg p-3">
+      <button type="submit" class="bg-yellow-500 text-black font-semibold py-3 rounded-lg hover:bg-yellow-400 transition">
+        Envoyer sur WhatsApp
+      </button>
+    </form>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-16 bg-gray-900 text-white text-center">
+    <h2 class="text-3xl font-bold mb-6">Contact</h2>
+    <p class="mb-2">📞 Téléphone : <strong>06 00 00 00 00</strong></p>
+    <p class="mb-2">📧 Email : <strong>chauffeur@vtc.com</strong></p>
+    <p>💬 WhatsApp disponible</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-black text-gray-400 text-center py-6">
+    © 2025 Votre Chauffeur VTC - Tous droits réservés
+  </footer>
+
+  <!-- SCRIPT WhatsApp -->
+  <script>
+    function sendWhatsApp(event) {
+      event.preventDefault();
+      let name = document.getElementById("name").value;
+      let phone = document.getElementById("phone").value;
+      let from = document.getElementById("from").value;
+      let to = document.getElementById("to").value;
+      let date = document.getElementById("date").value;
+
+      let message = `Bonjour, je souhaite réserver un trajet.\n\n👤 Nom : ${name}\n📞 Tel : ${phone}\n🚖 Trajet : ${from} → ${to}\n📅 Date/Heure : ${date}`;
+      
+      let url = `https://wa.me/33600000000?text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank");
+    }
+  </script>
+
+</body>
+</html>
