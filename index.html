@@ -9,24 +9,42 @@
 <body class="bg-gray-50 text-gray-800">
 
 <!-- HEADER -->
-<header class="relative h-screen bg-black text-white flex items-center justify-center"
+<header class="relative h-screen bg-black text-white overflow-hidden flex items-center justify-center"
         style="background: url('Black Logo.png') center/cover no-repeat;">
-  
-  <!-- Logo en fond (filigrane) -->
+
+  <!-- Logo centré -->
   <div class="absolute inset-0 flex items-center justify-center opacity-10">
-    <img src="mon-logo.png" alt="Logo" class="max-w-lg">
+    <img src="mon-logo.png" alt="Logo" class="max-w-3xl w-4/5 md:w-2/3" id="logo">
   </div>
 
-  <!-- Contenu principal -->
-  <div class="bg-black/60 p-8 rounded-xl text-center relative z-10">
+  <!-- Contenu principal : toujours sous le logo -->
+  <div id="header-content"
+       class="absolute text-center z-10 bg-black/60 p-8 rounded-xl left-1/2 transform -translate-x-1/2">
     <h1 class="text-4xl md:text-6xl font-bold">Votre Chauffeur GK365/VTC</h1>
     <p class="mt-4 text-lg md:text-2xl">Confort • Ponctualité • Disponibilité</p>
     <a href="#booking" class="mt-6 inline-block bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition">
       Réserver Maintenant
     </a>
   </div>
-</header>
 
+  <script>
+    // Positionne dynamiquement le texte sous le logo
+    window.addEventListener("load", positionHeaderText);
+    window.addEventListener("resize", positionHeaderText);
+
+    function positionHeaderText() {
+      const logo = document.getElementById("logo");
+      const content = document.getElementById("header-content");
+
+      if (logo && content) {
+        const rect = logo.getBoundingClientRect();
+        const header = logo.closest("header");
+        const offset = rect.bottom - header.getBoundingClientRect().top; // distance haut -> bas du logo
+        content.style.top = `${offset + 20}px`; // 20px d’espace sous le logo
+      }
+    }
+  </script>
+</header>
 
   <!-- NAVIGATION -->
   <nav class="bg-gray-900 text-white flex justify-center gap-8 py-4 sticky top-0 z-50">
@@ -118,4 +136,5 @@
 
 </body>
 </html>
+
 
