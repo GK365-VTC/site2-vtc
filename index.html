@@ -1,140 +1,266 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Votre Chauffeur GK365/VTC</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GK365 — VTC</title>
+
+  <!-- Tailwind via CDN (vite-like) -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- AOS (animations on scroll) -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <!-- Small custom styles -->
+  <style>
+    :root{--accent:#e63946;--accent-2:#f59e0b}
+    html.dark{background-color:#0b0b0b;color:#e6e6e6}
+    /* Floating action button */
+    .fab{position:fixed;right:18px;bottom:18px;z-index:60}
+    /* small visual polish for hero content background blur */
+    .glass{backdrop-filter: blur(6px);-webkit-backdrop-filter: blur(6px)}
+    /* tariff card number animation baseline */
+    .num {font-variant-numeric: tabular-nums;font-weight:700}
+  </style>
+
+  <!-- Meta for social preview -->
+  <meta name="description" content="GK365 — VTC : Confort, ponctualité et disponibilité. Réservez en quelques clics (Paris)." />
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="antialiased text-gray-900 bg-white dark:bg-black dark:text-gray-100">
 
-<!-- HEADER -->
-<header class="relative h-screen bg-black text-white overflow-hidden flex items-center justify-center"
-        style="background: url('Black Logo.png') center/cover no-repeat;">
+<!-- ========== HEADER / HERO ========== -->
+<header class="relative h-screen overflow-hidden">
+  <!-- background image (darkened) -->
+  <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('assets/images/Renault-Scenic-Alpine.jpg');filter:brightness(.25)"></div>
 
-  <!-- Logo centré -->
-  <div class="absolute inset-0 flex items-center justify-center opacity-10">
-    <img src="mon-logo.png" alt="Logo" class="max-w-3xl w-4/5 md:w-2/3" id="logo">
+  <!-- logo filigrane centered -->
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+    <img id="hero-logo" src="assets/images/Black Logo.png" alt="GK365" class="max-w-3xl w-4/5 opacity-10">
   </div>
 
-  <!-- Contenu principal : toujours sous le logo -->
-  <div id="header-content"
-       class="absolute text-center z-10 bg-black/60 p-8 rounded-xl left-1/2 transform -translate-x-1/2">
-    <h1 class="text-4xl md:text-6xl font-bold">Votre Chauffeur GK365/VTC</h1>
-    <p class="mt-4 text-lg md:text-2xl">Confort • Ponctualité • Disponibilité</p>
-    <a href="#booking" class="mt-6 inline-block bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition">
-      Réserver Maintenant
-    </a>
+  <!-- header content positioned dynamically under logo -->
+  <div id="hero-content" class="absolute left-1/2 transform -translate-x-1/2 z-20 text-center glass bg-black/50 p-6 rounded-xl max-w-3xl">
+    <h1 class="text-white font-extrabold text-4xl md:text-6xl">GK365 — VTC</h1>
+    <p class="mt-3 text-white text-lg md:text-2xl">Confort • Ponctualité • Disponibilité</p>
+    <div class="mt-6 flex justify-center gap-4">
+      <a href="#booking" class="inline-block bg-amber-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-amber-400 transition">Réserver Maintenant</a>
+      <a href="#services" class="inline-block border border-white/20 text-white px-5 py-3 rounded-lg">Nos services</a>
+    </div>
   </div>
 
-  <script>
-    // Positionne dynamiquement le texte sous le logo
-    window.addEventListener("load", positionHeaderText);
-    window.addEventListener("resize", positionHeaderText);
-
-    function positionHeaderText() {
-      const logo = document.getElementById("logo");
-      const content = document.getElementById("header-content");
-
-      if (logo && content) {
-        const rect = logo.getBoundingClientRect();
-        const header = logo.closest("header");
-        const offset = rect.bottom - header.getBoundingClientRect().top; // distance haut -> bas du logo
-        content.style.top = `${offset + 20}px`; // 20px d’espace sous le logo
-      }
-    }
-  </script>
+  <!-- theme toggle -->
+  <button id="theme-toggle" class="absolute top-6 right-6 z-40 bg-black/40 text-white p-2 rounded-md">☾</button>
 </header>
 
-  <!-- NAVIGATION -->
-  <nav class="bg-gray-900 text-white flex justify-center gap-8 py-4 sticky top-0 z-50">
-    <a href="#about" class="hover:text-yellow-400">À propos</a>
-    <a href="#services" class="hover:text-yellow-400">Services</a>
-    <a href="#booking" class="hover:text-yellow-400">Réservation</a>
-    <a href="#contact" class="hover:text-yellow-400">Contact</a>
-  </nav>
+<!-- ========== NAVIGATION ========== -->
+<nav class="sticky top-0 z-50 bg-white/40 dark:bg-black/60 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
+  <div class="max-w-6xl mx-auto px-6 flex items-center justify-between py-3">
+    <div class="flex items-center gap-3">
+      <img src="assets/images/Black Logo.png" alt="GK365" class="h-10 w-auto opacity-90">
+      <span class="font-semibold">GK365 — VTC</span>
+    </div>
+    <div class="hidden md:flex items-center gap-8 text-sm">
+      <a href="#about" class="hover:text-amber-500">À propos</a>
+      <a href="#services" class="hover:text-amber-500">Services</a>
+      <a href="#tarifs" class="hover:text-amber-500">Tarifs</a>
+      <a href="#booking" class="hover:text-amber-500">Réservation</a>
+      <a href="#contact" class="hover:text-amber-500">Contact</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="tel:+33682803245" class="hidden md:inline-block bg-amber-500 text-black px-4 py-2 rounded">06 82 80 32 45</a>
+      <button id="mobile-menu-btn" class="md:hidden p-2">☰</button>
+    </div>
+  </div>
+</nav>
 
-  <!-- ABOUT -->
-  <section id="about" class="py-16 text-center">
-    <h2 class="text-3xl font-bold mb-6">À propos</h2>
-    <p class="max-w-2xl mx-auto text-lg">Chauffeur VTC Professionnel, je vous accompagne pour vos trajets privés et professionnels.
-      Mon objectif : vous offrir un service haut de gamme basé sur la sécurité, le confort et la ponctualité.</p>
-  </section>
+<!-- ========== ABOUT ========== -->
+<section id="about" class="py-16">
+  <div class="max-w-4xl mx-auto px-6 text-center" data-aos="fade-up">
+    <h2 class="text-3xl font-bold mb-4">À propos</h2>
+    <p class="text-lg">GK365 — VTC propose un service professionnel sur Paris : confort, ponctualité et disponibilité. Chauffeur expérimenté, véhicule haut de gamme, service 7j/7. Réservez en quelques clics ou contactez-nous directement.</p>
+  </div>
+</section>
 
-  <!-- SERVICES -->
-  <section id="services" class="py-16 bg-gray-100">
-    <h2 class="text-3xl font-bold text-center mb-10">Nos Services</h2>
-    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-        <img src="car (1).jpg" alt="Service 1" class="w-full h-48 object-cover">
+<!-- ========== SERVICES ========== -->
+<section id="services" class="py-16 bg-gray-50 dark:bg-transparent">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-10" data-aos="fade-up">Nos services</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-white dark:bg-gray-900 rounded-xl shadow-md overflow-hidden" data-aos="fade-up" data-aos-delay="50">
+        <img src="assets/images/car-1.jpg" alt="Transferts" class="w-full h-48 object-cover">
         <div class="p-6">
-          <h3 class="text-xl font-semibold mb-2">Transferts Aéroport</h3>
-          <p>Prise en charge rapide et ponctuelle pour vos voyages.</p>
+          <h3 class="text-xl font-semibold">Transferts Aéroport</h3>
+          <p class="mt-2 text-sm">Prise en charge ponctuelle et assistance bagages.</p>
         </div>
       </div>
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-        <img src="car (16).jpg" alt="Service 2" class="w-full h-48 object-cover">
+      <div class="bg-white dark:bg-gray-900 rounded-xl shadow-md overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+        <img src="assets/images/car-2.jpg" alt="Pro" class="w-full h-48 object-cover">
         <div class="p-6">
-          <h3 class="text-xl font-semibold mb-2">Déplacements Professionnels</h3>
-          <p>Un service discret et fiable pour vos rendez-vous d’affaires.</p>
+          <h3 class="text-xl font-semibold">Déplacements Professionnels</h3>
+          <p class="mt-2 text-sm">Discrétion et ponctualité pour vos rendez-vous d’affaires.</p>
         </div>
       </div>
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-        <img src="car (17).jpg" alt="Service 3" class="w-full h-48 object-cover">
+      <div class="bg-white dark:bg-gray-900 rounded-xl shadow-md overflow-hidden" data-aos="fade-up" data-aos-delay="150">
+        <img src="assets/images/car-3.jpg" alt="Soirées" class="w-full h-48 object-cover">
         <div class="p-6">
-          <h3 class="text-xl font-semibold mb-2">Soirées & Événements</h3>
-          <p>Profitez pleinement de vos soirées sans vous soucier du retour.</p>
+          <h3 class="text-xl font-semibold">Soirées & Événements</h3>
+          <p class="mt-2 text-sm">Service sûr pour vos retours de soirée.</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- BOOKING -->
-  <section id="booking" class="py-16">
-    <h2 class="text-3xl font-bold text-center mb-8">Réservation</h2>
-    <form onsubmit="sendWhatsApp(event)" class="bg-white shadow-lg rounded-xl p-8 max-w-lg mx-auto grid gap-4">
-      <input id="name" type="text" placeholder="Nom et prénom" required class="border rounded-lg p-3">
-      <input id="phone" type="tel" placeholder="Téléphone" required class="border rounded-lg p-3">
-      <input id="from" type="text" placeholder="Lieu de départ" required class="border rounded-lg p-3">
-      <input id="to" type="text" placeholder="Lieu d’arrivée" required class="border rounded-lg p-3">
-      <input id="date" type="datetime-local" required class="border rounded-lg p-3">
-      <button type="submit" class="bg-yellow-500 text-black font-semibold py-3 rounded-lg hover:bg-yellow-400 transition">
-        Envoyer sur WhatsApp
-      </button>
+<!-- ========== TARIFS DYNAMIQUES ========== -->
+<section id="tarifs" class="py-16">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-8" data-aos="fade-up">Nos tarifs</h2>
+    <div id="tarif-grid" class="grid md:grid-cols-3 gap-6">
+      <!-- cards generated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ========== RÉSERVATION ========== -->
+<section id="booking" class="py-16 bg-gray-50 dark:bg-transparent">
+  <div class="max-w-2xl mx-auto px-6" data-aos="fade-up">
+    <h2 class="text-3xl font-bold text-center mb-6">Réservation</h2>
+
+    <!-- Formspree form (replace FORM_ID) -->
+    <form id="booking-form" action="https://formspree.io/f/REPLACE_WITH_YOUR_ID" method="POST" class="bg-white dark:bg-gray-900 rounded-xl p-6 shadow">
+      <div class="grid gap-4">
+        <input name="name" required placeholder="Nom et prénom" class="p-3 rounded border bg-transparent" />
+        <input name="phone" required placeholder="Téléphone" class="p-3 rounded border bg-transparent" />
+        <input name="from" required placeholder="Lieu de départ" class="p-3 rounded border bg-transparent" />
+        <input name="to" required placeholder="Lieu d'arrivée" class="p-3 rounded border bg-transparent" />
+        <input name="date" type="datetime-local" required class="p-3 rounded border bg-transparent" />
+        <input type="hidden" name="_replyto" value="vtc@gk365.fr" />
+        <button type="submit" class="bg-amber-500 text-black p-3 rounded font-semibold">Envoyer sur WhatsApp & Email</button>
+      </div>
     </form>
-  </section>
 
-  <!-- CONTACT -->
-  <section id="contact" class="py-16 bg-gray-900 text-white text-center">
-    <h2 class="text-3xl font-bold mb-6">Contact</h2>
-    <p class="mb-2">📞 Téléphone : <strong>06 82 80 32 45</strong></p>
-    <p class="mb-2">📧 Email : <strong>vtc@gk365.fr</strong></p>
-    <p>💬 WhatsApp disponible</p>
-  </section>
+    <p class="text-xs mt-3 text-center text-gray-500">Tu peux créer un compte gratuit sur Formspree, récupérer l'ID et le coller dans l'attribut <code>action</code> du formulaire.</p>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer class="bg-black text-gray-400 text-center py-6">
-    © 2025 Votre Chauffeur GK365/VTC - Tous droits réservés
-  </footer>
+<!-- ========== CONTACT / MAP ========== -->
+<section id="contact" class="py-16">
+  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-start">
+    <div data-aos="fade-up">
+      <h2 class="text-3xl font-bold mb-4">Contact</h2>
+      <p class="mb-2">📞 Téléphone : <strong>06 82 80 32 45</strong></p>
+      <p class="mb-2">📧 Email : <strong>vtc@gk365.fr</strong></p>
+      <p class="mb-6">💬 WhatsApp : <a href="https://wa.me/33682803245" class="text-amber-500">Envoyer un message</a></p>
 
-  <!-- SCRIPT WhatsApp -->
-  <script>
-    function sendWhatsApp(event) {
-      event.preventDefault();
-      let name = document.getElementById("name").value;
-      let phone = document.getElementById("phone").value;
-      let from = document.getElementById("from").value;
-      let to = document.getElementById("to").value;
-      let date = document.getElementById("date").value;
+      <h3 class="font-semibold mb-2">Zone d'intervention</h3>
+      <p>Paris et Île-de-France — transferts, déplacements professionnels et privés.</p>
+    </div>
 
-      let message = `Bonjour, je souhaite réserver un trajet.\n\n👤 Nom : ${name}\n📞 Tel : ${phone}\n🚖 Trajet : ${from} → ${to}\n📅 Date/Heure : ${date}`;
-      
-      let url = `https://wa.me/33682803245?text=${encodeURIComponent(message)}`;
-      window.open(url, "_blank");
+    <div data-aos="fade-up">
+      <div id="map" class="h-64 w-full rounded-lg border border-gray-200 dark:border-gray-800"></div>
+      <p class="text-xs text-gray-500 mt-2">Carte centrée sur Paris. Remplace <code>YOUR_GOOGLE_MAPS_API_KEY</code> par ta clé API Google Maps.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="bg-black text-gray-300 py-6 text-center">
+  <div class="max-w-6xl mx-auto px-6">© 2025 GK365 — VTC — Tous droits réservés</div>
+</footer>
+
+<!-- Floating action button: WhatsApp + phone -->
+<div class="fab flex flex-col gap-3">
+  <a href="https://wa.me/33682803245" target="_blank" class="bg-green-500 text-white p-3 rounded-full shadow-lg flex items-center justify-center" title="WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.955 11.955 0 0012 0C5.373 0 0 5.373 0 12c0 2.11.55 4.084 1.6 5.84L0 24l6.36-1.61A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12 0-2.77-1.04-5.31-2.5-7.5zM12 21.5c-1.77 0-3.45-.46-4.93-1.32l-.35-.2L4 20l.99-2.69-.2-.36A9.5 9.5 0 012.5 12 9.5 9.5 0 0112 2.5 9.5 9.5 0 0121.5 12 9.5 9.5 0 0112 21.5zM17.3 15.1c-.4-.2-2.4-1.2-2.8-1.3-.4-.1-.7-.2-1 .2s-1.1 1.3-1.4 1.6c-.3.3-.5.4-1 .1-.6-.3-2.5-.9-4.6-2.9-1.7-1.6-2.8-3.6-3.1-4.3-.3-.8 0-1.1.3-1.4.2-.2.5-.5.8-.8.2-.3.3-.4.5-.6.2-.1.2-.2.3-.3.1-.1.1-.1.2-.1.1 0 .3-.1.5-.1.2 0 .5 0 .8.1.3.1.8.4 1.2.7.4.3.7.6.9.8.2.2.4.5.7.6.2.1.4.2.5.2.2 0 .4-.1.6-.2.2-.1 1-.6 1.2-.7.2-.1.4-.2.6-.2.2 0 .5 0 .8.1.2 0 1 .4 1.2.5.2.1.6.4.9.7.3.3.3.5.4.8.1.3 0 .6-.2.9-.1.3-.3.6-.5.9-.2.3-.6.6-.8.7-.2.1-.5.2-.8.2s-.7 0-1 .1c-.3.1-1.6.6-1.7.6-.2 0-.4.1-.5.2-.1.1.1.5.5 1 .4.5 2.3 2.8 4.9 4.5 2.6 1.7 3 1.4 3.2 1.3.2-.1.9-.6 1.1-.9.2-.3.2-.7.1-1-.1-.3-.3-.6-.7-.8z"/></svg>
+  </a>
+  <a href="tel:+33682803245" class="bg-gray-800 text-white p-3 rounded-full shadow-lg flex items-center justify-center" title="Téléphone">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 01.94-.27c1.05.26 2.18.4 3.34.4a1 1 0 011 1V20a1 1 0 01-1 1C9.61 21 3 14.39 3 6a1 1 0 011-1h3.5a1 1 0 011 1c0 1.16.14 2.29.4 3.34.09.36.03.74-.27.94l-2.01 1.51z"/></svg>
+  </a>
+</div>
+
+<!-- ========== SCRIPTS ========== -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({duration:700,once:true});
+
+  // position header content under logo
+  function positionHeaderContent(){
+    const logo=document.getElementById('hero-logo');
+    const content=document.getElementById('hero-content');
+    const header=logo.closest('header');
+    if(!logo||!content||!header)return;
+    const rect=logo.getBoundingClientRect();
+    const headerRect=header.getBoundingClientRect();
+    const offset=rect.bottom-headerRect.top;
+    const extra=window.innerWidth<768?8:20;
+    content.style.top=(offset+extra)+'px';
+  }
+  window.addEventListener('load',positionHeaderContent);
+  window.addEventListener('resize',positionHeaderContent);
+
+  // theme toggle
+  const toggle=document.getElementById('theme-toggle');
+  function applyTheme(theme){
+    if(theme==='light'){document.documentElement.classList.remove('dark');toggle.textContent='☾'}else{document.documentElement.classList.add('dark');toggle.textContent='☀'}
+    localStorage.setItem('theme',theme);
+  }
+  toggle.addEventListener('click',()=>{
+    const isDark=document.documentElement.classList.contains('dark');
+    applyTheme(isDark?'light':'dark');
+  });
+  const saved=localStorage.getItem('theme')||((window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');
+  applyTheme(saved);
+
+  // mobile menu (very small)
+  document.getElementById('mobile-menu-btn')?.addEventListener('click',()=>{
+    alert('Menu mobile: utilise la navigation ancrée ou ajoute ici ton menu mobile.');
+  });
+
+  // tarifs dynamiques (editable array)
+  const tarifs=[
+    {title:'Course courte',desc:'Jusqu\'à 10 km',price:'25€'},
+    {title:'Course standard',desc:'10 - 30 km',price:'45€'},
+    {title:'Transfert aéroport',desc:'Prix fixe',price:'60€'},
+  ];
+  const grid=document.getElementById('tarif-grid');
+  tarifs.forEach((t,i)=>{
+    const div=document.createElement('div');
+    div.className='bg-white dark:bg-gray-900 rounded-xl p-6 shadow';
+    div.setAttribute('data-aos','fade-up');
+    div.setAttribute('data-aos-delay',String(50*i));
+    div.innerHTML=`<h3 class="text-xl font-semibold mb-2">${t.title}</h3><p class="text-sm text-gray-600 dark:text-gray-300 mb-4">${t.desc}</p><div class="text-3xl num">${t.price}</div>`;
+    grid.appendChild(div);
+  });
+
+  // Google Maps init
+  function initMap(){
+    try{
+      const paris={lat:48.8566,lng:2.3522};
+      const map=new google.maps.Map(document.getElementById('map'),{zoom:12,center:paris,disableDefaultUI:true});
+      new google.maps.Marker({position:paris,map});
+    }catch(e){
+      console.warn('Google Maps not loaded or API key missing');
     }
-  </script>
+  }
+  window.initMap=initMap;
+
+  // send form also to WhatsApp on submit (optional behaviour)
+  document.getElementById('booking-form')?.addEventListener('submit',function(e){
+    // let Formspree do its job; also open WhatsApp with filled message
+    const f=new FormData(this);
+    const name=f.get('name')||'';
+    const phone=f.get('phone')||'';
+    const from=f.get('from')||'';
+    const to=f.get('to')||'';
+    const date=f.get('date')||'';
+    const message=`Bonjour, je souhaite réserver un trajet.\n\n👤 Nom : ${name}\n📞 Tel : ${phone}\n🚖 Trajet : ${from} → ${to}\n📅 Date/Heure : ${date}`;
+    // open WhatsApp in new tab
+    window.open('https://wa.me/33682803245?text='+encodeURIComponent(message),'_blank');
+  });
+</script>
+
+<!-- Google Maps async script (replace YOUR_GOOGLE_MAPS_API_KEY) -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap"></script>
 
 </body>
 </html>
-
-
